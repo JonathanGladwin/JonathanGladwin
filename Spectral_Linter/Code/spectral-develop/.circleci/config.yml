@@ -1,0 +1,342 @@
+version: 2.1
+
+orbs:
+  windows: circleci/windows@2.4.1
+
+executors:
+  linux:
+    docker:
+      - image: cimg/base:2021.07
+
+defaults:
+  default-branch: &default-branch develop
+  default-branch-filter: &default-branch-filter
+    branches:
+      only:
+        - *default-branch
+  release-tag-filter: &release-tag-filter
+    branches:
+      ignore: /.*/
+    tags:
+      only: /^v.*/
+  node-versions: &node-versions
+    - "12.22"
+    - "14.18"
+    - "16.13"
+
+commands:
+  cached-dependencies:
+    steps:
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - &yarn-cache-key yarn-packages-{{ arch }}-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          command: yarn install --immutable
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: *yarn-cache-key
+          paths:
+            - ~/.yarn
+
+  build:
+    description: >-
+      Build everything required to run the test suite and to release the package
+    steps:
+      - run:
+          name: Build the code
+          command: yarn build
+
+  build-binary:
+    parameters:
+      targets:
+        type: string
+    steps:
+      - run:
+          name: Create the Spectral Binary
+          command: yarn workspace @stoplight/spectral-cli pkg . --public --targets << parameters.targets >> --output binaries/spectral
+
+  install-and-build:
+    description: >-
+      Install and build everything required to run the test suite
+    steps:
+      - cached-dependencies
+      - build
+
+  lint-code:
+    steps:
+      - run:
+          name: Lint code
+          command: yarn lint.eslint
+
+  lint-documentation:
+    steps:
+      - run:
+          name: Lint documentation
+          command: yarn lint.prettier
+
+  lint-commit-message:
+    steps:
+      - run:
+          name: Lint commit messages
+          command: node ./scripts/lint-commit-messages.mjs
+
+  test-node:
+    parameters:
+      max-workers:
+        type: integer
+        default: 3
+    steps:
+      - run: yarn pretest
+      - run:
+          name: Run node tests
+          command: yarn test.jest --maxWorkers=<< parameters.max-workers >>
+
+  test-harness:
+    parameters:
+      os:
+        type: enum
+        enum:
+          - linux
+          - windows
+        default: linux
+    steps:
+      - build-binary:
+          targets: << parameters.os >>
+      - run:
+          name: Run harness tests
+          command: yarn test.harness
+
+  prepare-release:
+    steps:
+      - checkout
+      - cached-dependencies
+      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+      - build
+
+jobs:
+  lint:
+    docker:
+      - image: circleci/node:lts
+    steps:
+      - checkout
+      - cached-dependencies
+      - lint-commit-message
+      - lint-code
+      - lint-documentation
+
+  test-node:
+    parameters:
+      node-version:
+        type: string
+    docker:
+      - image: circleci/node:<< parameters.node-version >>
+    # we should be able to restore the default when the following issue is resolved
+    # - https://github.com/kulshekhar/ts-jest/issues/1967
+    # - https://github.com/facebook/jest/issues/10550
+    resource_class: medium+
+    steps:
+      - checkout
+      - install-and-build
+      - test-node
+      - test-harness:
+          os: linux
+
+  test-browser:
+    docker:
+      - image: circleci/node:current-browsers
+    steps:
+      - checkout
+      - install-and-build
+      - run: yarn pretest
+      - run:
+          name: Run browser tests
+          command: yarn test.karma
+
+  test-windows:
+    executor:
+      name: windows/default
+    steps:
+      - checkout
+      - cached-dependencies
+      - build
+      - test-node:
+          max-workers: 3
+      - test-harness:
+          os: windows
+
+  build-nix-binaries:
+    docker:
+      - image: circleci/node:lts
+    steps:
+      - checkout
+      - install-and-build
+      - build-binary:
+          targets: linux,macos,alpine
+      - persist_to_workspace:
+          root: ./packages/cli/
+          paths:
+            - binaries
+
+  build-windows-binary:
+    executor:
+      name: windows/default
+    steps:
+      - checkout
+      - cached-dependencies
+      - run: yarn build
+      - build-binary:
+          targets: windows
+      - persist_to_workspace:
+          root: ./packages/cli/
+          paths:
+            - binaries
+
+  release-docker:
+    docker:
+      - image: circleci/node:lts
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.2
+          docker_layer_caching: true
+      - run:
+          name: set version in package.json
+          command: npm --no-git-tag-version --no-commit-hooks -f version from-git
+      - run:
+          name: docker build
+          command: |
+            GIT_SHA=${CIRCLE_SHA1:0:7}
+            echo "GIT_SHA=${GIT_SHA}";
+            docker build . --tag stoplight/spectral:${GIT_SHA};
+      - run:
+          name: docker push
+          environment:
+            DEFAULT_BRANCH: *default-branch
+          command: |
+            shopt -s extglob
+            GIT_SHA=${CIRCLE_SHA1:0:7}
+            echo "GIT_SHA=${GIT_SHA}";
+            # Login to DockerHub
+            echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
+            DOCKER_BRANCH="${CIRCLE_BRANCH//\//-}";
+            if [[ "$DOCKER_BRANCH" == "$DEFAULT_BRANCH" ]]; then
+              DOCKER_BRANCH="latest";
+            fi
+            echo "DOCKER_BRANCH=${DOCKER_BRANCH}";
+            if [[ -n "$DOCKER_BRANCH" ]]; then
+              docker tag stoplight/spectral:${GIT_SHA} stoplight/spectral:${DOCKER_BRANCH};
+            fi
+            if [[ -n "$CIRCLE_TAG" ]]; then
+              FULL_VERSION="${CIRCLE_TAG/v/}";
+              MINOR_VERSION="${FULL_VERSION/%.+([0-9])/}";
+              MAJOR_VERSION="${MINOR_VERSION/%.+([0-9])/}";
+              echo "FULL_VERSION=$FULL_VERSION";
+              echo "MINOR_VERSION=$MINOR_VERSION";
+              echo "MAJOR_VERSION=$MAJOR_VERSION";
+              docker tag stoplight/spectral:${GIT_SHA} stoplight/spectral:${FULL_VERSION};
+              docker tag stoplight/spectral:${GIT_SHA} stoplight/spectral:${MINOR_VERSION};
+              docker tag stoplight/spectral:${GIT_SHA} stoplight/spectral:${MAJOR_VERSION};
+              docker tag stoplight/spectral:${GIT_SHA} stoplight/spectral:latest;
+            fi
+            echo "Docker tags:";
+            docker images stoplight/spectral --format="{{ .Tag }}";
+            docker push stoplight/spectral:${GIT_SHA};
+            echo "Pushed stoplight/spectral:${GIT_SHA}";
+            if [[ -n "$CIRCLE_TAG" ]]; then
+              docker push stoplight/spectral:${FULL_VERSION};
+              docker push stoplight/spectral:${MINOR_VERSION};
+              docker push stoplight/spectral:${MAJOR_VERSION};
+              docker push stoplight/spectral:latest;
+              echo "Pushed stoplight/spectral:${FULL_VERSION}";
+            fi
+            if [[ -n "$DOCKER_BRANCH" ]]; then
+              docker push stoplight/spectral:${DOCKER_BRANCH};
+              echo "Pushed stoplight/spectral:${DOCKER_BRANCH}";
+            fi
+
+  release:
+    docker:
+      - image: circleci/node:lts
+    steps:
+      - prepare-release
+      - run: yarn release
+
+  upload-artifacts:
+    docker:
+      - image: circleci/golang:1-stretch
+    steps:
+      - attach_workspace:
+          at: /tmp/
+      - run:
+          name: "Download GitHub Release Utility"
+          command: go get github.com/tcnksm/ghr
+      - run:
+          name: "Publish Release artifacts on GitHub"
+          command: ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${CIRCLE_TAG} /tmp/binaries
+
+workflows:
+  commit:
+    jobs:
+      - test-node:
+          matrix:
+            parameters:
+              node-version: *node-versions
+      - test-windows:
+          filters: *default-branch-filter
+      - test-browser
+      - lint
+      - approve-release:
+          type: approval
+          filters: *default-branch-filter
+      - release:
+          filters: *default-branch-filter
+          requires:
+            - lint
+            - test-node
+            - test-windows
+            - test-browser
+            - approve-release
+
+  release:
+    jobs:
+      - build-nix-binaries:
+         filters: *release-tag-filter
+      - build-windows-binary:
+          filters: *release-tag-filter
+      - upload-artifacts:
+          filters: *release-tag-filter
+          requires:
+            - build-nix-binaries
+            - build-windows-binary
+      - release-docker:
+          filters: *release-tag-filter
+          requires:
+            - upload-artifacts
+
+  scheduled-packages-release:
+    triggers:
+      - schedule:
+          cron: "0 12 * * 1-5"
+          filters: *default-branch-filter
+    jobs:
+      - lint
+      - test-node:
+          matrix:
+            parameters:
+              node-version: *node-versions
+          requires:
+            - lint
+      - test-windows:
+          requires:
+            - lint
+      - test-browser:
+          requires:
+            - lint
+      - release:
+          requires:
+            - lint
+            - test-node
+            - test-windows
+            - test-browser
