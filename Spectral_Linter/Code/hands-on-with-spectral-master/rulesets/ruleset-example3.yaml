@@ -1,0 +1,15 @@
+rules: {
+  'operation-singular-tag': {
+      description: 'Operation must not have more than a single tag.',
+      recommended: true,
+      type: 'style',
+      given: "$",
+      then: {
+        field: 'tags',
+        function: length,
+        functionOptions: {
+          max: 5
+        },
+      },
+    }
+}

@@ -1,0 +1,10 @@
+rules:
+  response-order:
+    message: Responses should be in alphabetical order
+    recommended: true
+    given: $.paths.*.*.responses
+    then:
+      function: alphabetical
+      functionOptions: {
+          keyedBy: 'key',
+        }

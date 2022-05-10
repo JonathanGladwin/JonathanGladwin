@@ -1,0 +1,27 @@
+openapi: 3.0.2
+info:
+  title: Alphabetical Order
+  version: 0.0.0
+paths:
+  /foo:
+    get:
+      operationId: get-foo
+      responses:
+        '404':
+          description: ''
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/foo'
+components:
+  schemas:
+    foo:
+      title: More incorrect casing
+      type: object
+      properties:
+        id:
+          type: integer
+        bar:
+          type: string
