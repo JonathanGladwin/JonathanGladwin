@@ -1,0 +1,31 @@
+openapi: 3.0.1
+info:
+  title: Users API Spec
+  description: Working with employee details
+  version: v1
+  contact:
+    name: API Support
+    url: http://www.example.com/support
+    email: support@example.com
+servers:
+- url: http://localhost:8080/CFormCloudRestAPI
+  description: The user api
+tags:
+- name: user details api spec
+paths:
+  /api/v1/iam:
+    summary: Users
+    description: API to work with user details
+    get:
+      #tags:
+      #- users
+      summary: Get list of user
+      description: Retrieve the list of user and their details
+      operationId: getUsers
+      responses:
+        "200":
+          description: request to get list of users
+          content:
+            application/json:
+              #schema:
+                #$ref: '#/users/'

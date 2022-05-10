@@ -1,0 +1,15 @@
+extends: spectral:oas
+rules:
+  openapi-tags-alphabetical:
+    message: "OpenAPI object should have alphabetical"
+    severity: error
+    type: style
+    recommended: false
+    given: "$.paths[*]~"
+    then:
+      field: tags
+      function: alphabetical
+      functionOptions:
+        keyedBy: "@key"
+
+
