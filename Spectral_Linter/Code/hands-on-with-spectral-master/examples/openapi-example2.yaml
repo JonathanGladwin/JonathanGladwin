@@ -51,6 +51,8 @@ paths:
             minimum: 0
             maximum: 50
       responses:
+        '400':
+          description: bad input parameter
         '200':
           description: search results matching criteria
           content:
@@ -59,8 +61,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/InventoryItem'
-        '400':
-          description: bad input parameter
     post:
       tags:
         - admins

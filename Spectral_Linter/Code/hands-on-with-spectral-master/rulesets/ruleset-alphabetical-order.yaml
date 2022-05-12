@@ -1,10 +1,13 @@
-rules:
-  response-order:
-    message: Responses should be in alphabetical order
-    recommended: true
-    given: $.paths.*.*.responses
-    then:
-      function: alphabetical
-      functionOptions: {
-          keyedBy: 'key',
-        }
+rules: {
+  'alphabetical-order': {
+      description: Tags must follow the Alphabetical Order name,
+      given: "$",
+      then: {
+        field: 'tags',
+        function: alphabetical,
+        functionOptions: {
+          keyedBy: name
+        },
+      },
+    }
+}

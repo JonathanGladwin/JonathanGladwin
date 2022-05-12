@@ -10,6 +10,7 @@ rules: {
         function: length,
         functionOptions: {
           max: 1
+          min: 0
         },
       },
     }

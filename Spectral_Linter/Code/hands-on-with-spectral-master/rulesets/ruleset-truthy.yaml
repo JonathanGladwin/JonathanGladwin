@@ -1,0 +1,10 @@
+rules: {
+  'truthy-ruleset': {
+    type: style,
+      given: "$.servers.*",
+      then: [{
+        field: 'description',
+        function: truthy
+      }],
+    }
+}

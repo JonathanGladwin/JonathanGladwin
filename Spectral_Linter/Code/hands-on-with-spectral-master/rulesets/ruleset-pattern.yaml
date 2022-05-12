@@ -1,0 +1,12 @@
+rules: {
+  'pattern-ruleset': {
+      given: "$..[description,title]",
+      then: {
+        field: 'tags',
+        function: pattern,
+        functionOptions: {
+          notMatch: 'notMatchingString'
+        },
+      },
+    }
+}
