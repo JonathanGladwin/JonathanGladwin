@@ -1,0 +1,11 @@
+rules: {
+  'xor-ruleset': {
+      given: "$.info",
+      then: {
+        function: xor,
+        functionOptions: {
+          properties: [title,value]
+        },
+      },
+    }
+}

@@ -1,0 +1,10 @@
+rules: {
+  'defined-ruleset': {
+    type: style,
+      given: "$.servers.*",
+      then: {
+        field: 'url',
+        function: undefined
+      },
+    }
+}

@@ -1,0 +1,12 @@
+rules: {
+  'casing-ruleset': {
+    type: style,
+      given: "$.info.title",
+      then: {
+        function: casing,
+        functionOptions: {
+          type: camel
+        },
+      },
+    }
+}

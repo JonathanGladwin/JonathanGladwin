@@ -1,0 +1,13 @@
+rules: {
+  'emueration-ruleset': {
+    type: style,
+      given: "$.info.version",
+      then: {
+        field: 'tags',
+        function: enumeration,
+        functionOptions: {
+          values: ["3.0.0","3.0.1"]
+        },
+      },
+    }
+}

@@ -1,0 +1,10 @@
+rules: {
+  'falsy-ruleset': {
+    type: style,
+      given: "$.servers.*",
+      then: [{
+        field: 'description',
+        function: falsy
+      }],
+    }
+}
