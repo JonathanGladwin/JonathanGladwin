@@ -1,12 +1,12 @@
 rules: {
   'emueration-ruleset': {
     type: style,
-      given: "$.info.version",
+      given: "$.info.title",
       then: {
         field: 'tags',
         function: enumeration,
         functionOptions: {
-          values: ["3.0.0","3.0.1"]
+          values: ["title1","title2"]
         },
       },
     }

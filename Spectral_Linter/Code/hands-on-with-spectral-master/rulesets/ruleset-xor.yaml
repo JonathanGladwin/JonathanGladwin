@@ -4,7 +4,7 @@ rules: {
       then: {
         function: xor,
         functionOptions: {
-          properties: [title,value]
+          properties: [title,description]
         },
       },
     }

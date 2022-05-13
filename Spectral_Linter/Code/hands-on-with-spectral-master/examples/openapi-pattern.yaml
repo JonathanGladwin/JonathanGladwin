@@ -1,6 +1,6 @@
 openapi: 3.0.0
 servers:
-  - description: SwaggerHub API Auto Mocking
+  - description: SwaggerHub API Auto Mocking notMatchingString
     url: https://virtserver.swaggerhub.com/self51142/API1/1.0.0
 info:
   description: This is a simple API
@@ -18,7 +18,7 @@ tags:
   - name: admins
     description: Secured Admin-only calls
 paths:
-  /inventory:
+  /v1/application/program/name/api:
     get:
       tags:
         - developers
