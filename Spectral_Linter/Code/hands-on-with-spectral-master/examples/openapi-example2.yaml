@@ -13,10 +13,10 @@ info:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 tags:
-  - name: admins
-    description: Secured Admin-only calls
   - name: developers
     description: Operations available to regular developers
+  - name: admins
+    description: Secured Admin-only calls
 paths:
   /inventory:
     get:

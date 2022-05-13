@@ -1,11 +1,11 @@
 openapi: 3.0.0
 servers:
-  - description: SwaggerHub API Auto Mocking
+  - description: SwaggerHub API Auto Mocking notMatchingString
     url: https://virtserver.swaggerhub.com/self51142/API1/1.0.0
 info:
   description: This is a simple API
   version: "1.0.0"
-  title: Simple Inventory API 
+  title: OpenAPI 
   contact:
     email: you@your-company.com
     name: chennai
@@ -13,9 +13,9 @@ info:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 tags:
-  - name: developers
-    description: Operations available to regular developers
   - name: admins
+    description: Operations available to regular developers
+  - name: developers
     description: Secured Admin-only calls
 paths:
   /inventory:

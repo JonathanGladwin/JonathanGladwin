@@ -1,11 +1,10 @@
 rules: {
   'pattern-ruleset': {
-      given: "$..[description,title]",
+      given: "$.paths[*]~",
       then: {
-        field: 'tags',
         function: pattern,
         functionOptions: {
-          notMatch: 'notMatchingString'
+          match: '/^\/(v1|v2)\/([a-z])+\/([a-z])+\/([a-z])+$/'
         },
       },
     }
