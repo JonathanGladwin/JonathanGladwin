@@ -1,10 +1,12 @@
+#In this example, we have checked the path URL match the given regular expression.
+#In this example, we gave the not-supporting URL in paths and we got the warning error. If you gave the correct URL format, then you got the success result.
 rules: {
   'pattern-ruleset': {
       given: "$.paths[*]~",
       then: {
         function: pattern,
         functionOptions: {
-          match: '/^\/(v1|v2)\/([a-z])+\/([a-z])+\/([a-z])+$/'
+          match: '/^\/(v1|v2)\/([a-z])+\/(([a-z])+|\/([a-z]))+$/'
         },
       },
     }

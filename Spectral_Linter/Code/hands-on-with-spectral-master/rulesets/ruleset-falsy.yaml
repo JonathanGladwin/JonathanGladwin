@@ -1,3 +1,5 @@
+#It should be checked that the value should be “false”, “”,”0”, “null”, “undefined”
+#In this example, we gave the description value as falsy in ruleset and gave the string value in openapi, then we got the warning error. If you want to get the success result, then give the description value as null.
 rules: {
   'falsy-ruleset': {
     type: style,

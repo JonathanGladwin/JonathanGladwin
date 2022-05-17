@@ -1,0 +1,11 @@
+rules: {
+  'basepath-ruleset': {
+      given: "$.basePath",
+      then: {
+        function: pattern,
+        functionOptions: {
+          match: '/^\/(v1|v2)\/([a-z])+\/(([a-z])+|\/([a-z]))+$/'
+        },
+      },
+    }
+}

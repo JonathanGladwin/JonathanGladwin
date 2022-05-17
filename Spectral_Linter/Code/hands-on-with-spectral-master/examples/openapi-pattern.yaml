@@ -17,8 +17,9 @@ tags:
     description: Operations available to regular developers
   - name: admins
     description: Secured Admin-only calls
+#In this example, we gave the not-supporting URL in paths and we got the warning error. If you gave the correct URL format, then you got the success result.
 paths:
-  /v1/application/program/name/api:
+  /v1/application:
     get:
       tags:
         - developers

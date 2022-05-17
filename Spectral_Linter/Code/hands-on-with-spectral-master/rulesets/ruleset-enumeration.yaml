@@ -1,9 +1,10 @@
+#Does the field value exist in this set of possible values?
+#In this example, we gave two enumeration values "title1 and title2" in the ruleset and gave the openapi value as "OpenAPI". Then we got a warning error after changing the openapi value to "title1". Then we got the success result.
 rules: {
   'emueration-ruleset': {
     type: style,
       given: "$.info.title",
       then: {
-        field: 'tags',
         function: enumeration,
         functionOptions: {
           values: ["title1","title2"]

@@ -32,10 +32,9 @@ paths:
   /example:
     # In this operation we do not apply the security, because it was applied globally above.
     # The security will be applied to this operation for that reason.
-    post:
+    get:
       summary: Server example operation
       description: This is an example operation to show how security is applied to the call.
-      security: [ ]
       responses:
         '200':
           description: OK
@@ -51,6 +50,6 @@ paths:
           description: OK
 # Added by API Auto Mocking Plugin
 host: virtserver.swaggerhub.com
-basePath: /whymrtechexpert/Oauth-2-0-implicit/1.0.0
+basePath: /v1/application
 schemes:
  - https

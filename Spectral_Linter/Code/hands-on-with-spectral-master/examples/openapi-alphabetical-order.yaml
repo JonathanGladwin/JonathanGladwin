@@ -8,10 +8,11 @@ info:
   title: Simple Inventory API 
   contact:
     email: you@your-company.com
-    name: chennai
+    name: openapi
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+#In this example, we have checked that the value inside the tags keyword should be present in alphabetical order. 
 tags:
   - name: developers
     description: Operations available to regular developers

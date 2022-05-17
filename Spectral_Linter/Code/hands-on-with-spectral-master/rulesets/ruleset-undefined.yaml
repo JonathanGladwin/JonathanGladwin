@@ -1,3 +1,5 @@
+#The value must be undefined.
+#In this example, we set the server url object is undefined in the ruleset and we are defining the url object in the openapi, then we get the warning error. If you want to get a successful result, then undefine the url in the server object.
 rules: {
   'defined-ruleset': {
     type: style,
