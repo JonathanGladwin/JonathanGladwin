@@ -1,5 +1,6 @@
 openapi: 3.0.0
 servers:
+#In this example, we gave the description value as falsy in ruleset and gave the string value in openapi, then we got the warning error. If you want to get the success result, then give the description value as null.
   - description: SwaggerHub API Auto Mocking
     url: https://virtserver.swaggerhub.com/self51142/API1/1.0.0
 info:

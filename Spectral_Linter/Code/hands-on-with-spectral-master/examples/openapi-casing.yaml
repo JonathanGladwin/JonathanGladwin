@@ -5,6 +5,7 @@ servers:
 info:
   description: This is a simple API
   version: "1.0.0"
+#In this example, we set the info.title value to have a camel case string in the ruleset and gave a snake case string value in the openapi, then we got the warning error. If you want to get a successful result, then give the camel case string in openapi.
   title: Simple Inventory API 
   contact:
     email: you@your-company.com

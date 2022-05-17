@@ -5,10 +5,11 @@ servers:
 info:
   description: This is a simple API
   version: "1.0.0"
+#In this example, we gave two enumeration values "title1 and title2" in the ruleset and gave the openapi value as "OpenAPI". Then we got a warning error after changing the openapi value to "title1". Then we got the success result.
   title: OpenAPI 
   contact:
     email: you@your-company.com
-    name: chennai
+    name: OpenAPI
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'

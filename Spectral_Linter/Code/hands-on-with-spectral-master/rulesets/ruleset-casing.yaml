@@ -1,3 +1,5 @@
+#This function should check if the text must match a certain case, like camelCase or snake_case.
+#In this example, we set the info.title value to have a camel case string in the ruleset and gave a snake case string value in the openapi, then we got the warning error. If you want to get a successful result, then give the camel case string in openapi.
 rules: {
   'casing-ruleset': {
     type: style,

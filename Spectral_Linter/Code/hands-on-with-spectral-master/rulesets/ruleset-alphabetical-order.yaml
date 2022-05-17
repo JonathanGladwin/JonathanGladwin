@@ -1,3 +1,5 @@
+#This function is used to arrange the alphabetical content of simple arrays or objects by passing a key.
+#In this example, we have checked that the value inside the tags keyword should be present in alphabetical order. 
 rules: {
   'alphabetical-order': {
       description: Tags must follow the Alphabetical Order name,

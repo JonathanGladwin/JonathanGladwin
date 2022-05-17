@@ -1,3 +1,5 @@
+#It should be checked that the value should not be “false”, “”,”0”, “null”, “undefined”
+#In this example, we gave the description value as truthy in the ruleset and gave the null value in openapi, then we got the warning error. If you want to get a successful result, then give the string value in the description.
 rules: {
   'truthy-ruleset': {
     type: style,

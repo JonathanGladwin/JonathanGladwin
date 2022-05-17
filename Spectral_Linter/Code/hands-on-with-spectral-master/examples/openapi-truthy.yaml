@@ -1,5 +1,6 @@
 openapi: 3.0.0
 servers:
+#In this example, we gave the description value as truthy in the ruleset and gave the null value in openapi, then we got the warning error. If you want to get a successful result, then give the string value in the description.
   - description: null
     url: https://virtserver.swaggerhub.com/self51142/API1/1.0.0
 info:

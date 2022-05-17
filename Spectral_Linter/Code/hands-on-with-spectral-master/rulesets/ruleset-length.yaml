@@ -1,8 +1,9 @@
+#It is used to count the length of a string or an array, the number of properties in an object, or a numeric value.
+#In this example, we have checked how this function works. We added two tags in the open API and set the max to 1 and min to 0 in the ruleset. Then we got a hint error. If you got the success result, then change the max to 2 in the ruleset.
 rules: {
   'operation-singular-tag': {
       description: 'Operation must not have more than a single tag.',
       recommended: true,
-      severity: hint,
       type: 'style',
       given: "$",
       then: {
