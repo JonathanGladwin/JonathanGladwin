@@ -18,7 +18,7 @@ tags:
   - name: admins
     description: Secured Admin-only calls
 paths:
-  /inventory:
+  /inventory/:
     get:
       tags:
         - developers

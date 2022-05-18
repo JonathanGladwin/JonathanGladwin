@@ -14,7 +14,7 @@ info:
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 tags:
   - name: developers
-    description: Operations available to regular developers
+    description: Operations available to regular developers <script>
   - name: admins
     description: Secured Admin-only calls
 paths:

@@ -65,7 +65,7 @@ paths:
       tags:
         - admins
       summary: adds an inventory item
-      operationId: addInventory
+      operationId: searchInventory
       description: Adds an item to the system
       responses:
         '201':

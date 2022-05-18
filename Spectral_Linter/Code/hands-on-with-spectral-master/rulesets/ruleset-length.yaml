@@ -1,18 +1,37 @@
-#It is used to count the length of a string or an array, the number of properties in an object, or a numeric value.
-#In this example, we have checked how this function works. We added two tags in the open API and set the max to 1 and min to 0 in the ruleset. Then we got a hint error. If you got the success result, then change the max to 2 in the ruleset.
+# It is used to count the length of a string or an array, the number of properties in an object, or a numeric value.
+# TODO: In this example, we have checked how this function works. We added two tags in the open API and set the max to 1 and min to 0 in the ruleset. Then we got a hint error. If you got the success result, then change the max to 2 in the ruleset.
 rules: {
+  # own rule name
   'operation-singular-tag': {
-      description: 'Operation must not have more than a single tag.',
-      recommended: true,
-      type: 'style',
-      given: "$",
-      then: {
-        field: 'tags',
-        function: length,
-        functionOptions: {
-          max: 1,
-          min: 0
-        },
+
+    # Describe the usage of the ruleset or something.
+    # This value should be used for error results.
+    description: 'Operation must not have more than a single tag.',
+
+    # If it is true, then the ruleset is applied to the openapi, else it is not applied to the openapi.
+    recommended: true,
+
+    # It picks the part of the document to apply rules, having JSONPath syntax to specify the part
+    # $ - To apply the rules to the entire document
+    given: "$",
+
+    # It explains which functions to apply to the given part. It may be a core or custom function
+    then: {
+
+      # It is applying the function to a specific property in an object.
+      # It is not given whether the function should be applied to the entire target of the given object.
+      field: 'tags',
+
+      # The name of the function is specified.
+      function: length,
+
+      # The function’s property
+      # Each function has unique function options.
+      # In this example, we have checked how this function works. We added two tags in the open API and set the max to 1 and min to 0 in the ruleset. Then we got a hint error. If you got the success result, then change the max to 2 in the ruleset.
+      functionOptions: {
+        max: 1,
+        min: 0
       },
-    }
+    },
+  }
 }

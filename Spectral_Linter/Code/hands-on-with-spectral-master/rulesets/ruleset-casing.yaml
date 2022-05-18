@@ -1,14 +1,25 @@
-#This function should check if the text must match a certain case, like camelCase or snake_case.
-#In this example, we set the info.title value to have a camel case string in the ruleset and gave a snake case string value in the openapi, then we got the warning error. If you want to get a successful result, then give the camel case string in openapi.
+# This function should check if the text must match a certain case, like camelCase or snake_case.
+# TODO: In this example, we set the info.title value to have a camel case string in the ruleset and gave a snake case string value in the openapi, then we got the warning error. If you want to get a successful result, then give the camel case string in openapi.
 rules: {
+  # own rule name
   'casing-ruleset': {
-    type: style,
-      given: "$.info.title",
-      then: {
-        function: casing,
-        functionOptions: {
-          type: camel
-        },
+
+    # It picks the part of the document to apply rules, having JSONPath syntax to specify the part
+    # $.info.title - Use the rules for title property that are presented in the information object.
+    given: "$.info.title",
+
+    # It explains which functions to apply to the given part. It may be a core or custom function
+    then: {
+
+      # The name of the function is specified
+      function: casing,
+
+      # The function’s property
+      # Each function has unique function options.
+      # In this example, we set the info.title value to have a camel case string in the ruleset and gave a snake case string value in the openapi, then we got the warning error. If you want to get a successful result, then give the camel case string in openapi.
+      functionOptions: {
+        type: camel
       },
-    }
+    },
+  }
 }

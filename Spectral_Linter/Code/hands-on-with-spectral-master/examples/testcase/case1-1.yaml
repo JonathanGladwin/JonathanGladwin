@@ -15,8 +15,6 @@ info:
 tags:
   - name: developers
     description: Operations available to regular developers
-  - name: admins
-    description: Secured Admin-only calls
 paths:
   /inventory:
     get:

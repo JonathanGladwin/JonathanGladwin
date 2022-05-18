@@ -1,0 +1,7 @@
+functions: [security-check]
+rules:
+  security-empty-check:
+    given: "$.paths.[*].[*].security"
+    severity: error
+    then:
+      function: security-check

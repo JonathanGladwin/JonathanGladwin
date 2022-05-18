@@ -1,13 +1,25 @@
-#In this example, we have checked the path URL match the given regular expression.
-#In this example, we gave the not-supporting URL in paths and we got the warning error. If you gave the correct URL format, then you got the success result.
+# In this example, we have checked the path URL match the given regular expression.
+# TODO: In this example, we gave the not-supporting URL in paths and we got the warning error. If you gave the correct URL format, then you got the success result.
 rules: {
+  # own rule name
   'pattern-ruleset': {
-      given: "$.paths[*]~",
-      then: {
-        function: pattern,
-        functionOptions: {
-          match: '/^\/(v1|v2)\/([a-z])+\/(([a-z])+|\/([a-z]))+$/'
-        },
+
+    # It picks the part of the document to apply rules, having JSONPath syntax to specify the part
+    # $.paths[*]~ - to apply the rules for URL in the paths tag
+    given: "$.paths[*]~",
+
+    # It explains which functions to apply to the given part. It may be a core or custom function
+    then: {
+
+      # The name of the function is specified.
+      function: pattern,
+
+      # The function’s property
+      # Each function has unique function options.
+      # In this example, we have checked the path URL match the given regular expression.
+      functionOptions: {
+        match: '/^\/(v1|v2)\/([a-z])+\/(([a-z])+|\/([a-z]))+$/'
       },
-    }
+    },
+  }
 }

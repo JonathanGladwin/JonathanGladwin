@@ -57,10 +57,7 @@ paths:
           description: search results matching criteria
           content:
             application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/InventoryItem'
+              schema: "scheme"
     post:
       tags:
         - admins

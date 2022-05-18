@@ -4,7 +4,7 @@ servers:
     url: https://virtserver.swaggerhub.com/self51142/API1/1.0.0
 info:
   description: This is a simple API
-  version: "1.0.0"
+  version: "versionname"
   title: Simple Inventory API 
   contact:
     email: you@your-company.com

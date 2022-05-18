@@ -67,6 +67,7 @@ paths:
       summary: adds an inventory item
       operationId: addInventory
       description: Adds an item to the system
+      security:
       responses:
         '201':
           description: item created

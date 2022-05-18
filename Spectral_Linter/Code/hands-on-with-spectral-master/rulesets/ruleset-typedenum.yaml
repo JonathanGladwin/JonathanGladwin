@@ -2,17 +2,17 @@
 # TODO: In this example, we gave two enumeration values "title1 and title2" in the ruleset and gave the openapi value as "OpenAPI". Then we got a warning error after changing the openapi value to "title1". Then we got the success result.
 rules: {
   # own rule name
-  'emueration-ruleset': {
+  'typedenum-ruleset': {
 
     # It picks the part of the document to apply rules, having JSONPath syntax to specify the part
     # $.info.title - Use the rules for title property that are presented in the information object.
-    given: "$.info.title",
+    given: "$.paths.*[?(@property == 'get')].parameters.schema",
 
     # It explains which functions to apply to the given part. It may be a core or custom function
     then: {
 
       # The name of the function is specified.
-      function: enumeration,
+      function: typedenum,
 
       # The function’s property
       # Each function has unique function options.

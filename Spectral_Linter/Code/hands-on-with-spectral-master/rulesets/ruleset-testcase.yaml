@@ -1,0 +1,3 @@
+# Rulesets can extend other rulesets using the extends property, allowing you to pull in other rulesets.
+# Spectral has a built-in "oas" ruleset, with OAS being shorthand for the OpenAPI Specification.
+extends: spectral:oas

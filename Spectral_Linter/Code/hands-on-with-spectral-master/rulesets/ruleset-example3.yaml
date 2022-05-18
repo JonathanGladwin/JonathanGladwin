@@ -1,16 +1,9 @@
-rules: {
-  'operation-singular-tag': {
-      description: 'Operation must not have more than a single tag.',
-      recommended: true,
-      severity: hint,
-      type: 'style',
-      given: "$",
-      then: {
-        field: 'tags',
-        function: length,
-        functionOptions: {
-          max: 1
-        },
-      },
-    }
-}
+functions: [empty-object]
+functionsDir: "./functions"
+rules:
+  security-object-must-not-be-a-hacked-in-empty-object:
+    message: "{{error}}"
+    severity: error
+    given: "$.paths.*[?(@property == 'post' || @property == 'put' || @property == 'patch' || @property == 'delete')].parameters"
+    then:
+      function: empty-object

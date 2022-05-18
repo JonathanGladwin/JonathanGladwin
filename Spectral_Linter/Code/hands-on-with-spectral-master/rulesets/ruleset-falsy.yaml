@@ -1,12 +1,22 @@
-#It should be checked that the value should be “false”, “”,”0”, “null”, “undefined”
-#In this example, we gave the description value as falsy in ruleset and gave the string value in openapi, then we got the warning error. If you want to get the success result, then give the description value as null.
+# It should be checked that the value should be “false”, “”,”0”, “null”, “undefined”
+# TODO: In this example, we gave the description value as falsy in ruleset and gave the string value in openapi, then we got the warning error. If you want to get the success result, then give the description value as null.
 rules: {
+  # own rule name
   'falsy-ruleset': {
-    type: style,
-      given: "$.servers.*",
-      then: [{
-        field: 'description',
-        function: falsy
-      }],
-    }
+
+    # It picks the part of the document to apply rules, having JSONPath syntax to specify the part
+    # $.servers.* - Use the rules for servers object.
+    given: "$.servers.*",
+
+    # It explains which functions to apply to the given part. It may be a core or custom function
+    then: [{
+
+      # It is applying the function to a specific property in an object.
+      # It is not given whether the function should be applied to the entire target of the given object.
+      field: 'description',
+
+      # The name of the function is specified.
+      function: falsy
+    }],
+  }
 }
