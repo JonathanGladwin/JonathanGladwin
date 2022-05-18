@@ -1,0 +1,25 @@
+# In this example, we have checked any unreferenced objects present in the openapi document.
+# TODO: In this example, we have added one new unreferenced object inside the component schema and used the core function to get the warning error. If you want to get a successful result, then refer to the object in the operation property.
+rules: {
+  # own rule name
+  'unreferencedReusableObject-ruleset': {
+
+    # It picks the part of the document to apply rules, having JSONPath syntax to specify the part
+    # $.components.schemas - Use the rules for component.schemas object.
+    given: "$.components.schemas",
+
+    # It explains which functions to apply to the given part. It may be a core or custom function
+    then: {
+
+      # The name of the function is specified.
+      function: unreferencedReusableObject,
+
+      # The function’s property
+      # Each function has unique function options.
+      # In this example, we have added one new unreferenced object inside the component schema and used the core function to get the warning error. If you want to get a successful result, then refer to the object in the operation property.
+      functionOptions: {
+          reusableObjectsLocation: "#/components/schemas"
+        },
+      },
+    }
+}

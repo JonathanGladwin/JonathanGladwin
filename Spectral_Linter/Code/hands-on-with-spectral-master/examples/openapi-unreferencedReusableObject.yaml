@@ -82,6 +82,22 @@ paths:
         description: Inventory item to add
 components:
   schemas:
+  # In this example, we have added one new unreferenced object inside the component schema and used the core function to get the warning error.
+    UnreferencedReusableObject:
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: ACME Corporation
+        homePage:
+          type: string
+          format: url
+          example: 'https://www.acme-corp.com'
+        phone:
+          type: string
+          example: 408-867-5309
+      type: object
     InventoryItem:
       type: object
       required:

@@ -1,10 +1,22 @@
-#Communicate that one of these properties is required and no more than one is allowed to be defined.
-#In this example, we set the "title or description" present in the info object and set "title and description" in the openapi, then we got the warning error. If you want to get a successful result, then set any one value in the ruleset.
+# Communicate that one of these properties is required and no more than one is allowed to be defined.
+# TODO: In this example, we set the "title or description" present in the info object and set "title and description" in the openapi, then we got the warning error. If you want to get a successful result, then set any one value in the ruleset.
 rules: {
+  # own rule name
   'xor-ruleset': {
+
+    # It picks the part of the document to apply rules, having JSONPath syntax to specify the part
+    # $.info - Use the rules for info object.
       given: "$.info",
+
+      # It explains which functions to apply to the given part. It may be a core or custom function
       then: {
+
+        # The name of the function is specified.
         function: xor,
+
+        # The function’s property
+        # Each function has unique function options.
+        # In this example, we set the "title or description" present in the info object and set "title and description" in the openapi, then we got the warning error. If you want to get a successful result, then set any one value in the ruleset.
         functionOptions: {
           properties: [title,description]
         },

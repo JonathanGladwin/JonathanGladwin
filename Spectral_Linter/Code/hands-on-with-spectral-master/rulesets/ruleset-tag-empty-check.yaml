@@ -1,0 +1,22 @@
+# TODO: In this example, we have checked the tags property is not an empty array. If it is empty, then throw the error message.
+# Descripe the function name
+functions: [tag-empty-check]
+
+
+rules:
+
+  # own rule name
+  security-empty-check:
+
+    # It picks the part of the document to apply rules, having JSONPath syntax to specify the part
+    # $.paths.[*].[*].tags - Use the tags for paths object.
+    given: "$.paths.[*].[*].tags"
+
+    # The severity keyword is optional and can be error, warn, info, or hint.
+    severity: error
+
+    # It explains which functions to apply to the given part. It may be a core or custom function
+    then:
+
+      # The name of the function is specified.
+      function: tag-empty-check

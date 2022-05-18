@@ -12,6 +12,7 @@ info:
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+# In this example, we have checked how this function works. We added two tags in the open API and set the max to 1 and min to 0 in the ruleset. Then we got a hint error. If you got the success result, then change the max to 2 in the ruleset.
 tags:
   - name: admins
     description: Operations available to regular developers

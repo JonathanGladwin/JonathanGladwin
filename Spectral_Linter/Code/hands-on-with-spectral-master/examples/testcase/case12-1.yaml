@@ -34,7 +34,7 @@ paths:
           required: true
           schema:
             type: string
-            enum: [dummy, not_so_dummy]
+            enum: [dummy, dummy, not_so_dummy]
         - in: query
           name: skip
           description: number of records to skip for pagination

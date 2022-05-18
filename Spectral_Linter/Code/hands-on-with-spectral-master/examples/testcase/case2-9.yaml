@@ -7,7 +7,7 @@ info:
   version: "1.0.0"
   title: Simple Inventory API 
   contact:
-    email: you@your-company.com
+    email: your-company.com
     name: OpenAPI
   license:
     name: Apache 2.0

@@ -1,6 +1,5 @@
 openapi: 3.0.0
 servers:
-#In this example, we set the server url object is defined in the ruleset and we are not defining the url object in the openapi, then we get the warning error. If you want to get a successful result, then define the url in the server object.
   - description: SwaggerHub API Auto Mocking
 info:
   description: This is a simple API
@@ -17,12 +16,13 @@ tags:
     description: Operations available to regular developers
   - name: admins
     description: Secured Admin-only calls
+# In this example, we set the path object summary property is defined in the ruleset and we are not defining the paths.[*].summary property in the openapi, then we get the warning error. If you want to get a successful result, then define the paths.[*].summary property.
 paths:
   /inventory:
     get:
       tags:
         - developers
-      summary: searches inventory
+      #summary: searches inventory
       operationId: searchInventory
       description: |
         By passing in the appropriate options, you can search for

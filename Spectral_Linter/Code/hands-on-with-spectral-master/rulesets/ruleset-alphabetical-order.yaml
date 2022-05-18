@@ -1,12 +1,30 @@
-#This function is used to arrange the alphabetical content of simple arrays or objects by passing a key.
-#In this example, we have checked that the value inside the tags keyword should be present in alphabetical order. 
+# This function is used to arrange the alphabetical content of simple arrays or objects by passing a key.
+# TODO: In this example, we have checked that the value inside the tags keyword should be present in alphabetical order. 
 rules: {
+  # own rule name
   'alphabetical-order': {
+      
+      # Describe the usage of the ruleset or something.
+      # This value should be used for error results.
       description: Tags must follow the Alphabetical Order name,
+
+      # It picks the part of the document to apply rules, having JSONPath syntax to specify the part
+      # $ - To apply the rules to the entire document
       given: "$",
+
+      # It explains which functions to apply to the given part. It may be a core or custom function
       then: {
+
+        # It is applying the function to a specific property in an object.
+        # It is not given whether the function should be applied to the entire target of the given object.
         field: 'tags',
+
+        # The name of the function is specified.
         function: alphabetical,
+
+        # The function’s property
+        # Each function has unique function options.
+        # In this functionOptions we have arranged the tag values depending on name property.
         functionOptions: {
           keyedBy: name
         },

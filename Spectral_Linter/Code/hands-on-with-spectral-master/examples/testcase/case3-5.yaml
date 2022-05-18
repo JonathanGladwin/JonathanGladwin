@@ -1,7 +1,7 @@
 openapi: 3.0.0
 servers:
   - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/self51142/API1/1.0.0
+    url: 123456
 info:
   description: This is a simple API
   version: "1.0.0"

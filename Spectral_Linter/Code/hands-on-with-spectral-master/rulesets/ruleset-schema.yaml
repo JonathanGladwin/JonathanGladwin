@@ -1,0 +1,43 @@
+# In this example, we check the openapi server object must follow the server object style described in the ruleset.
+# TODO: In this example, we defined the server object type as array and had a minimum of one item in the ruleset and in the open API we defined the server object as an empty array and got the warning error. If you want to get a successful result, then add one object value to the server array.
+rules: {
+  # own rule name
+  'schema-ruleset': {
+
+    # It picks the part of the document to apply rules, having JSONPath syntax to specify the part
+    # $ - To apply the rules to the entire document
+    given: "$",
+
+    # It explains which functions to apply to the given part. It may be a core or custom function
+    then: {
+
+      # It is applying the function to a specific property in an object.
+      # It is not given whether the function should be applied to the entire target of the given object.
+      field: servers,
+
+      # The name of the function is specified.
+      function: schema,
+
+      # The function’s property
+      # Each function has unique function options.
+      # In this example, we defined the server object type as array and had a minimum of one item in the ruleset and in the open API we defined the server object as an empty array and got the warning error. If you want to get a successful result, then add one object value to the server array.
+      functionOptions: {
+
+        # keyword
+        schema: {
+
+          # It should mention the data type of object
+          type: array,
+
+          # It have the data type of the items
+          items: {
+            type: object
+          },
+
+          # It mention the minimum no of items the property have
+          minItems: 1
+        }
+      },
+    },
+  }
+}
