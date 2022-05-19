@@ -1,0 +1,31 @@
+# It is an array having the custom function name
+functions:
+  - equals
+
+# any path relative to the ruleset file is okay
+functionsDir: "./my-functions"
+
+# Keyword
+rules:
+
+  # own rule name
+  ruleset-change-directory:
+
+    # This value should be used for error results.
+    message: "{{error}}"
+
+    # It picks the part of the document to apply rules, having JSONPath syntax to specify the part
+    # $.info - Use the rules for info object.
+    given: "$.info"
+
+    # It explains which functions to apply to the given part. It may be a core or custom function
+    then:
+
+      # The name of the function is specified.
+      # It should be a function name
+      function: "equals"
+
+      # The function’s property
+      # Each function has unique function options.
+      functionOptions:
+        value: "OpenAPI"

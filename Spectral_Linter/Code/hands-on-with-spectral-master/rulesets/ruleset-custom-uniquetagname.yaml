@@ -1,0 +1,22 @@
+# It is an array having the custom function name
+functions: [uniqueTagNames]
+
+# Keyword
+rules:
+
+  # own rule name
+  unique-tag-names:
+
+    # This value should be used for error results.
+    message: "Tags should have distinct names: {{error}}"
+
+    # It picks the part of the document to apply rules, having JSONPath syntax to specify the part
+    # $.tags - Use the rules for tags object.
+    given: "$.tags"
+
+    # It explains which functions to apply to the given part. It may be a core or custom function
+    then:
+
+      # The name of the function is specified.
+      # It should be a function name
+      function: "uniqueTagNames"
