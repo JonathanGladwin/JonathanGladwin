@@ -5,7 +5,7 @@ servers:
 info:
   description: This is a simple API
   version: "1.0.0"
-  title: Simple Inventory API 
+  title: Title
   contact:
     email: you@your-company.com
     name: OpenAPI
@@ -82,21 +82,6 @@ paths:
         description: Inventory item to add
 components:
   schemas:
-    UnreferencedReusableObject:
-      required:
-        - name
-      properties:
-        name:
-          type: string
-          example: ACME Corporation
-        homePage:
-          type: string
-          format: url
-          example: 'https://www.acme-corp.com'
-        phone:
-          type: string
-          example: 408-867-5309
-      type: object
     InventoryItem:
       type: object
       required:
@@ -132,4 +117,3 @@ components:
           type: string
           example: 408-867-5309
       type: object
-    
