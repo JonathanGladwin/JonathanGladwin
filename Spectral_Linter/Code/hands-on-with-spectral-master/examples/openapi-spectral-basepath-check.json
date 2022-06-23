@@ -1,0 +1,73 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Sample Implicit Flow OAuth2 Project",
+      "description": "This is an example of using OAuth2 Implicit Flow in a specification to describe security to your API.",
+      "contact": {
+        "name": "Swagger 2.0",
+        "email": "sampleapi@example.com"
+      }
+    },
+    "host": "virtserver.swaggerhub.com",
+    "basePath": "/v1/enterprise/conversation/web-translator",
+    "schemes": [
+      "https"
+    ],
+    "securityDefinitions": {
+      "implicit": {
+        "type": "oauth2",
+        "authorizationUrl": "http://example.com/oauth/auth",
+        "flow": "implicit",
+        "scopes": {
+          "write": "allows modifying resources",
+          "read": "allows reading resources"
+        }
+      }
+    },
+    "security": [
+      {
+        "implicit": [
+          "read",
+          "write"
+        ]
+      }
+    ],
+    "tags":[
+      {
+        "name":"getExampleData"
+      },
+      {
+        "name":"getPing"
+      }
+    ],
+    "paths": {
+      "/example": {
+        "get": {
+          "tags":["getExampleData"],
+          "summary": "Server example operation",
+          "operationId": "getExample",
+          "description": "This is an example operation to show how security is applied to the call.",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/ping": {
+        "get": {
+          "tags":["getPing"],
+          "operationId": "getPing",
+          "summary": "Server heartbeat operation",
+          "description": "This operation shows how to override the global security defined above, as we want to open it up for all users.",
+          "security": [],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      }
+    }
+  }
