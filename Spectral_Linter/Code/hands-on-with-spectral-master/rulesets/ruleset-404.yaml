@@ -1,19 +1,19 @@
-functions: [basepath-security]
+functions: [check-404]
 
 rules:
 
   # own rule name
-  basepath-security-check:
+  check-404:
 
     # It picks the part of the document to apply rules, having JSONPath syntax to specify the part
-    # $.basePath - Use the base path for paths object.
-    given: "$"
+    # $.paths.[*].[*].tags - Use the tags for paths object.
+    given: "$.paths.[*].[*].responses"
 
     # It explains which functions to apply to the given part. It may be a core or custom function
     then:
 
       # The name of the function is specified.
-      function: basepath-security
+      function: check-404
 
 #rules: {
 #  'basepath-ruleset': {

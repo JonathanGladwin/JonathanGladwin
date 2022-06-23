@@ -38,16 +38,24 @@ paths:
       responses:
         '200':
           description: OK
-  /ping:
+  /ping/{id}:
     get:
       summary: Server heartbeat operation
       description: This operation shows how to override the global security defined above, as we want to open it up for all users.
       # We want to require no security schemes and override the globally define security scheme.
       # To do that, we simply provide an empty array to the 'security' property.
       security: [ ]
+      parameters:
+        - in: path
+          name: id
+          type: integer
+          required: true
+          description: Numeric ID of the user to get
       responses:
         '200':
           description: OK
+        '404':
+          description: Not Found
 # Added by API Auto Mocking Plugin
 host: virtserver.swaggerhub.com
 basePath: /v1/application/cosa/name
